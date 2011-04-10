@@ -27,7 +27,9 @@ Grid::~Grid() {
   }
 }
 
-void Grid::SetCell(Cell* c, int x, int y) {
+void Grid::SetCell(Cell* c) {
+  int x = c->GetX();
+  int y = c->GetY();
   if(m_cells[y * m_width + x]) {
     delete m_cells[y * m_width + x];
   }
@@ -42,13 +44,11 @@ void Grid::Update(int dt) {
 }
 
 void Grid::Draw() {
-
   for(int i= 0; i < m_width * m_height; i++) {
     m_cells[i]->Draw();
-  }
+  }  
   
   m_window.Draw(m_sprite);
-
 }
 
 void Grid::DrawCell(int x, int y, sf::Color c) {

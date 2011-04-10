@@ -107,10 +107,10 @@ void RedCell::Update(int dt) {
       return;
     }
     Cell* tmp = new RedCell(c->GetX(), c->GetY(), m_life);
-    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+    m_grid->SetCell(tmp);
   } else if(c->GetType() == GREEN) {
     Cell* tmp = new RedCell(c->GetX(), c->GetY(), m_life = 10);
-    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+    m_grid->SetCell(tmp);
   }
   m_life--;
 }
@@ -135,10 +135,10 @@ void GreenCell::Update(int dt) {
       return;
     }
     Cell* tmp = new GreenCell(c->GetX(), c->GetY(), m_life);
-    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+    m_grid->SetCell(tmp);
   } else if(c->GetType() == BLUE) {
     Cell* tmp = new GreenCell(c->GetX(), c->GetY(), m_life = 10);
-    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+    m_grid->SetCell(tmp);
   }
   m_life--;
 }
@@ -163,10 +163,10 @@ void BlueCell::Update(int dt) {
       return;
     }
     Cell* tmp = new BlueCell(c->GetX(), c->GetY(), m_life);
-    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+    m_grid->SetCell(tmp);
   } else if(c->GetType() == RED) {
     Cell* tmp = new BlueCell(c->GetX(), c->GetY(), m_life = 10);
-    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+    m_grid->SetCell(tmp);
   }
   m_life--;
 }
@@ -204,7 +204,7 @@ void PurpleCell::Update(int dt) {
     tmp = new BlueCell(c->GetX(), c->GetY(), m_life = 3);
     break;
   }
-  m_grid->SetCell(tmp, c->GetX(), c->GetY());
+  m_grid->SetCell(tmp);
 
   m_life--;
 }
@@ -228,7 +228,7 @@ void BlackCell::Update(int dt) {
   }
   Cell* c = GetRandomNeighbor();
   Cell* tmp = new BlackCell(c->GetX(), c->GetY(), m_life - 1);
-  m_grid->SetCell(tmp, c->GetX(), c->GetY());  
+  m_grid->SetCell(tmp);  
 }
 
 void BlackCell::Draw() {
@@ -247,7 +247,7 @@ void YellowCell::Update(int dt) {
   if(m_life <= 0) {
     m_life = 0;
     Cell* tmp = new BlankCell(m_x, m_y, 0);
-    m_grid->SetCell(tmp, m_x, m_y);
+    m_grid->SetCell(tmp);
     return;
   }
   
@@ -270,7 +270,7 @@ void YellowCell::Update(int dt) {
     } else {
       tmp = new BlankCell(c->GetX(), c->GetY(), m_life);
     }
-    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+    m_grid->SetCell(tmp);
   }
 }
 

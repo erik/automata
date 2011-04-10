@@ -102,7 +102,7 @@ int main(void) {
         break;
       }
 
-      g.SetCell(tmp, x, y);      
+      g.SetCell(tmp);      
     }
     
     g.Update(time);

@@ -11,7 +11,7 @@ public:
   Grid(int width, int height, sf::RenderWindow& w);
   ~Grid();
 
-  void SetCell(Cell*, int x, int y);
+  void SetCell(Cell* c);
   void Update(int delta);
   void Draw();
   void DrawCell(int x, int y, sf::Color c);
