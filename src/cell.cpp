@@ -77,13 +77,18 @@ int Cell::CalcColor() {
 BlankCell::BlankCell(int x, int y, int ignored) {
   m_x = x;
   m_y = y;
+  drawn = false;
 }
 
 void BlankCell::Update(int dt) {
 }
 
 void BlankCell::Draw() {
-  //  m_grid->DrawCell(m_x, m_y, sf::Color::White);
+  /* only draw blank cell once */
+  if(!drawn) {
+    m_grid->DrawCell(m_x, m_y, sf::Color::White);
+    drawn = true;
+  }
 }
 
 /* Red Cell */
@@ -222,9 +227,8 @@ void BlackCell::Update(int dt) {
     return;
   }
   Cell* c = GetRandomNeighbor();
-  Cell* tmp = new BlackCell(c->GetX(), c->GetY(), --m_life);
-  m_grid->SetCell(tmp, c->GetX(), c->GetY());
-  
+  Cell* tmp = new BlackCell(c->GetX(), c->GetY(), m_life - 1);
+  m_grid->SetCell(tmp, c->GetX(), c->GetY());  
 }
 
 void BlackCell::Draw() {

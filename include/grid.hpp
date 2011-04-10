@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "automata.hpp"
 #include "cell.hpp"
 
 class Grid {
@@ -23,8 +24,9 @@ private:
   bool m_drawEvens;
   int m_width;
   int m_height;
-  Cell* m_cells[250 * 250];
+  Cell* m_cells[WINDOW_WIDTH * WINDOW_HEIGHT];
   sf::RenderWindow &m_window;
+  sf::Image m_frame;
 };
 
 #endif /* _GRID_H_ */

@@ -50,6 +50,8 @@ public:
   void Draw();
 
   CellType GetType() { return BLANK; }
+private:
+  bool drawn;
 };
 
 class RedCell : public Cell {
@@ -95,7 +97,7 @@ public:
 
 class BlackCell : public Cell {
 public:
-  BlackCell(int x, int y, int life = 5);
+  BlackCell(int x, int y, int life = 10);
 
   void Update(int delta);
   void Draw();

@@ -8,28 +8,32 @@
 #include <sstream>
 
 int main(void) {
-  double scalex = 200.0 / 800;
-  double scaley = 200.0 / 600;
+  double scalex = WINDOW_WIDTH / 600.0;
+  double scaley = WINDOW_HEIGHT / 600.0;
 
-  sf::RenderWindow App(sf::VideoMode(800, 600, 32), "Automata");
+  sf::RenderWindow App(sf::VideoMode(600, 600, 32), "Automata");
   App.UseVerticalSync(true);
-  App.SetFramerateLimit(12);
 
-  sf::View view(sf::FloatRect(0, 0, 200, 200));
+  sf::View view(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
   App.SetView(view);
 
   App.Clear(sf::Color(255, 255, 255));
   
-  Grid g(200, 200, App);
+  Grid g(WINDOW_WIDTH, WINDOW_HEIGHT, App);
 
   bool mouseDown = false;
 
   CellType selection = RED;
 
   const sf::Input& input = App.GetInput();
+  
+  // limit the number of draws per second 
+  double drawTimer = 1.0 / 20;
 
   while (App.IsOpened()) {
-    float time = App.GetFrameTime();
+    double time = App.GetFrameTime();
+    drawTimer -= time;
+
 
     sf::Event Event;
     while (App.GetEvent(Event)) {
@@ -61,14 +65,14 @@ int main(void) {
       int x = input.GetMouseX() * scalex;
       int y = input.GetMouseY() * scaley;
 
-      if( x > 199) {
-        x = 199;
+      if( x > WINDOW_WIDTH - 1) {
+        x = WINDOW_WIDTH - 1;
       } else if( x < 0 ) {
         x = 0;
       }
 
-      if(y > 199) {
-        y = 199;
+      if(y > WINDOW_HEIGHT - 1) {
+        y = WINDOW_HEIGHT - 1;
       } else if( y < 0 ) {
         y = 0;
       }
@@ -85,8 +89,10 @@ int main(void) {
         break;
       case PURPLE:
         tmp = new PurpleCell(x, y);
+        break;
       case BLACK:
         tmp = new BlackCell(x, y);
+        break;
       default:
         break;
       }
@@ -95,7 +101,12 @@ int main(void) {
     }
     
     g.Update(time);
-    g.Draw();
+    
+    if(drawTimer <= 0) {
+      App.Clear(sf::Color(255, 255, 255));
+      g.Draw();
+      drawTimer = 1.0 / 20;
+    }
     
     App.Display();
   }

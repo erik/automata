@@ -1,10 +1,11 @@
+#include "automata.hpp"
 #include "grid.hpp"
 #include "cell.hpp"
 
 #include <cstdlib>
 #include <iostream>
+
 Grid::Grid(int width, int height, sf::RenderWindow& w) :
-  m_drawEvens(false),
   m_width(width),
   m_height(height),
   m_window(w)
@@ -39,24 +40,19 @@ void Grid::Update(int dt) {
 }
 
 void Grid::Draw() {
-  /* hack optimization technique.
-     only draw half the cells each time ( drawing is the bottleneck )
-  */
-  int i = 0;
-  if(!m_drawEvens) {
-    i++;
-  }
-  for(; i < m_width * m_height; i += 2) {
+  m_frame.Create(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color(255, 255, 255));
+
+  for(int i= 0; i < m_width * m_height; i++) {
     m_cells[i]->Draw();
   }
-
-  m_drawEvens = !m_drawEvens;
+  
+  sf::Sprite s(m_frame);
+  m_window.Draw(s);
 
 }
 
 void Grid::DrawCell(int x, int y, sf::Color c) {
-  sf::Shape rect = sf::Shape::Rectangle(x, y, x + 1, y + 1, c);
-  m_window.Draw(rect);
+    m_frame.SetPixel(x, y, c);
 }
 
 Cell* Grid::GetCell(int x, int y) {
