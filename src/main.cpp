@@ -51,6 +51,8 @@ int main(void) {
           selection = BLUE;
         } else if(Event.Key.Code == '4') {
           selection = PURPLE;
+        } else if(Event.Key.Code == '5') {
+          selection = BLACK;
         }
       }
     }
@@ -83,6 +85,8 @@ int main(void) {
         break;
       case PURPLE:
         tmp = new PurpleCell(x, y);
+      case BLACK:
+        tmp = new BlackCell(x, y);
       default:
         break;
       }

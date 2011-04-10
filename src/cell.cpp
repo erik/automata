@@ -209,3 +209,26 @@ void PurpleCell::Draw() {
   m_grid->DrawCell(m_x, m_y, sf::Color(col, 0, col));
 }
 
+/* Black cell */
+BlackCell::BlackCell(int x, int y, int life) {
+  m_x = x;
+  m_y = y;
+  m_life = life;
+}
+
+void BlackCell::Update(int dt) {
+  if(m_life <= 0) {
+    m_life = 0;
+    return;
+  }
+  Cell* c = GetRandomNeighbor();
+  Cell* tmp = new BlackCell(c->GetX(), c->GetY(), --m_life);
+  m_grid->SetCell(tmp, c->GetX(), c->GetY());
+  
+}
+
+void BlackCell::Draw() {
+  int c = CalcColor() - 128;
+  m_grid->DrawCell(m_x, m_y, sf::Color(c, c, c));
+}
+
