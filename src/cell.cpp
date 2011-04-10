@@ -236,3 +236,46 @@ void BlackCell::Draw() {
   m_grid->DrawCell(m_x, m_y, sf::Color(c, c, c));
 }
 
+/* Yellow cell */
+YellowCell::YellowCell(int x, int y, int life) {
+  m_x = x;
+  m_y = y;
+  m_life = life;
+}
+
+void YellowCell::Update(int dt) {
+  if(m_life <= 0) {
+    m_life = 0;
+    Cell* tmp = new BlankCell(m_x, m_y, 0);
+    m_grid->SetCell(tmp, m_x, m_y);
+    return;
+  }
+  
+  /* spreads twice each time */
+  for(int i = 0; i < 2; ++i) {
+    Cell* c = GetRandomNeighbor();
+    Cell* tmp = NULL;
+    
+    if (c->GetType() == BLACK) {
+      continue;
+    }    
+    
+    if(c->GetType() != BLANK && c->GetType() != YELLOW) {
+      m_life = 20;
+    }
+    
+    int rand = sf::Randomizer::Random(0, 10);
+    if(rand % 3 == 0) {
+      tmp = new YellowCell(c->GetX(), c->GetY(), m_life - 1);
+    } else {
+      tmp = new BlankCell(c->GetX(), c->GetY(), m_life);
+    }
+    m_grid->SetCell(tmp, c->GetX(), c->GetY());
+  }
+}
+
+void YellowCell::Draw() {
+  int c = CalcColor() - 40;
+  m_grid->DrawCell(m_x, m_y, sf::Color(c, c, 0));
+}
+

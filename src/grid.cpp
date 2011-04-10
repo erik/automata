@@ -8,7 +8,9 @@
 Grid::Grid(int width, int height, sf::RenderWindow& w) :
   m_width(width),
   m_height(height),
-  m_window(w)
+  m_window(w),
+  m_frame(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color(255, 255, 255)),
+  m_sprite(m_frame)
 {
   for(int y = 0; y < height; ++y) {
     for(int x = 0; x < width; ++x) {
@@ -40,14 +42,12 @@ void Grid::Update(int dt) {
 }
 
 void Grid::Draw() {
-  m_frame.Create(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color(255, 255, 255));
 
   for(int i= 0; i < m_width * m_height; i++) {
     m_cells[i]->Draw();
   }
   
-  sf::Sprite s(m_frame);
-  m_window.Draw(s);
+  m_window.Draw(m_sprite);
 
 }
 

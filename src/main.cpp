@@ -57,6 +57,8 @@ int main(void) {
           selection = PURPLE;
         } else if(Event.Key.Code == '5') {
           selection = BLACK;
+        } else if(Event.Key.Code == '6') {
+          selection = YELLOW;
         }
       }
     }
@@ -92,6 +94,9 @@ int main(void) {
         break;
       case BLACK:
         tmp = new BlackCell(x, y);
+        break;
+      case YELLOW:
+        tmp = new YellowCell(x, y);
         break;
       default:
         break;

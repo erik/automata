@@ -10,7 +10,8 @@ enum CellType {
   GREEN, 
   BLUE,
   PURPLE,
-  BLACK
+  BLACK,
+  YELLOW
 } ;
 
 // base cell type
@@ -27,6 +28,9 @@ public:
 
   int GetX() { return m_x; }
   int GetY() { return m_y; }
+  int GetLife() { return m_life; }
+
+  void SetLife(int v) { m_life = v; }
 
   virtual ~Cell() {}
 
@@ -103,6 +107,16 @@ public:
   void Draw();
 
   CellType GetType() { return BLACK; }
+};
+
+class YellowCell : public Cell {
+public:
+  YellowCell(int x, int y, int life = 10);
+
+  void Update(int delta);
+  void Draw();
+
+  CellType GetType() { return YELLOW; }
 };
 
 #endif /* _CELL_H_ */

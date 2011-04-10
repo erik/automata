@@ -21,12 +21,12 @@ public:
   int GetHeight() { return m_height; }
 
 private:
-  bool m_drawEvens;
   int m_width;
   int m_height;
   Cell* m_cells[WINDOW_WIDTH * WINDOW_HEIGHT];
   sf::RenderWindow &m_window;
   sf::Image m_frame;
+  sf::Sprite m_sprite;
 };
 
 #endif /* _GRID_H_ */
