@@ -8,7 +8,8 @@ enum CellType {
   BLANK,
   RED,
   GREEN, 
-  BLUE
+  BLUE,
+  PURPLE
 } ;
 
 // base cell type
@@ -79,6 +80,17 @@ public:
   void Draw();
 
   CellType GetType() { return BLUE; }
+};
+
+/* teh plague!!!!11! */
+class PurpleCell : public Cell {
+public:
+  PurpleCell(int x, int y, int life = 10);
+
+  void Update(int delta);
+  void Draw();
+
+  CellType GetType() { return PURPLE; }
 };
 
 #endif /* _CELL_H_ */

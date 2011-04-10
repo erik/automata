@@ -169,3 +169,43 @@ void BlueCell::Update(int dt) {
 void BlueCell::Draw() {
   m_grid->DrawCell(m_x, m_y, sf::Color(0, 0, CalcColor()));
 }
+
+/* Purple cell */
+PurpleCell::PurpleCell(int x, int y, int life) {
+  m_x = x;
+  m_y = y;
+  m_life = life;
+}
+
+void PurpleCell::Update(int dt) {
+  Cell* c = GetRandomNeighbor();
+  if(m_life <= 0) {
+    m_life = 0;
+    return;
+  }
+  int rand = sf::Randomizer::Random(0, 3);
+  Cell* tmp = NULL;
+  switch(rand) {
+  case 0:
+    tmp = new PurpleCell(c->GetX(), c->GetY(), m_life = 0);
+    break;
+  case 1:
+    tmp = new RedCell(c->GetX(), c->GetY(), m_life = 3);
+    break;
+  case 2:
+    tmp = new GreenCell(c->GetX(), c->GetY(), m_life = 3);
+    break;
+  case 3:
+    tmp = new BlueCell(c->GetX(), c->GetY(), m_life = 3);
+    break;
+  }
+  m_grid->SetCell(tmp, c->GetX(), c->GetY());
+
+  m_life--;
+}
+
+void PurpleCell::Draw() {
+  int col = CalcColor();
+  m_grid->DrawCell(m_x, m_y, sf::Color(col, 0, col));
+}
+
