@@ -67,6 +67,11 @@ Cell* Cell::GetRandomNeighbor() {
   return m_grid->GetCell(x, y);
 }
 
+int Cell::CalcColor() {
+  int color =  (255 - (255 / ( m_life <= 0 ? 1 : m_life)));
+  return color < 128 ? 128 : color;
+}
+
 /* Blank Cell */
 
 BlankCell::BlankCell(int x, int y, int ignored) {
@@ -92,7 +97,8 @@ RedCell::RedCell(int x, int y, int life) {
 void RedCell::Update(int dt) {
   Cell* c = GetRandomNeighbor();
   if(c->GetType() == BLANK) {
-    if(m_life-- <= 0) {
+    if(m_life <= 0) {
+      m_life = 0;
       return;
     }
     Cell* tmp = new RedCell(c->GetX(), c->GetY(), m_life);
@@ -101,10 +107,11 @@ void RedCell::Update(int dt) {
     Cell* tmp = new RedCell(c->GetX(), c->GetY(), m_life = 10);
     m_grid->SetCell(tmp, c->GetX(), c->GetY());
   }
+  m_life--;
 }
 
 void RedCell::Draw() {
-  m_grid->DrawCell(m_x, m_y, sf::Color::Red);
+  m_grid->DrawCell(m_x, m_y, sf::Color(CalcColor(), 0, 0));
 }
 
 /* Green Cell */
@@ -118,7 +125,8 @@ GreenCell::GreenCell(int x, int y, int life) {
 void GreenCell::Update(int dt) {
   Cell* c = GetRandomNeighbor();
   if(c->GetType() == BLANK) {
-    if(m_life-- <= 0) {
+    if(m_life <= 0) {
+      m_life = 0;
       return;
     }
     Cell* tmp = new GreenCell(c->GetX(), c->GetY(), m_life);
@@ -127,10 +135,11 @@ void GreenCell::Update(int dt) {
     Cell* tmp = new GreenCell(c->GetX(), c->GetY(), m_life = 10);
     m_grid->SetCell(tmp, c->GetX(), c->GetY());
   }
+  m_life--;
 }
 
 void GreenCell::Draw() {
-  m_grid->DrawCell(m_x, m_y, sf::Color::Green);
+  m_grid->DrawCell(m_x, m_y, sf::Color(0, CalcColor(), 0));
 }
 
 /* Blue Cell */
@@ -144,7 +153,8 @@ BlueCell::BlueCell(int x, int y, int life) {
 void BlueCell::Update(int dt) {
   Cell* c = GetRandomNeighbor();
   if(c->GetType() == BLANK) {
-    if(m_life-- <= 0) {
+    if(m_life <= 0) {
+      m_life = 0;
       return;
     }
     Cell* tmp = new BlueCell(c->GetX(), c->GetY(), m_life);
@@ -153,8 +163,9 @@ void BlueCell::Update(int dt) {
     Cell* tmp = new BlueCell(c->GetX(), c->GetY(), m_life = 10);
     m_grid->SetCell(tmp, c->GetX(), c->GetY());
   }
+  m_life--;
 }
 
 void BlueCell::Draw() {
-  m_grid->DrawCell(m_x, m_y, sf::Color::Blue);
+  m_grid->DrawCell(m_x, m_y, sf::Color(0, 0, CalcColor()));
 }

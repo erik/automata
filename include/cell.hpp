@@ -21,6 +21,8 @@ public:
 
   Cell* GetRandomNeighbor();
 
+  int CalcColor();
+
   int GetX() { return m_x; }
   int GetY() { return m_y; }
 
